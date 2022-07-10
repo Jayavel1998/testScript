@@ -1,15 +1,27 @@
 package com.task;
 
-import java.io.File;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+import io.restassured.response.ResponseBody;
+import io.restassured.specification.RequestSpecification;
 
 public class WriteValue {
 	
 	
-	File file = new File("C:\\Users\\LENOVO\\eclipse new\\ApiProject\\src\\test\\resources\\new.json");
-	ObjectMapper mapper = new ObjectMapper();
-	
-	
+
+	static RequestSpecification req;
+	public static void main(String[] args) {
+
+		 Response response = RestAssured.given().header("content-type", "application/json").log().all().body("{\r\n" + 
+				"    \"name\": \"jayavel\",\r\n" + 
+				"    \"job\": \"leader\"\r\n" + 
+				"}").post("https://reqres.in/api/users");
+		 
+		System.err.println(response.getStatusCode());
+		ResponseBody body = response.getBody();
+
+		
+		System.out.println(body.asPrettyString());
+}
 
 }
